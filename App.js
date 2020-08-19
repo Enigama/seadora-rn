@@ -3,6 +3,7 @@ import {StyleSheet, View, TouchableOpacity, Text, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {HomeScreen} from "./src/screens/HomeScreen";
+import {AuthScreen} from "./src/screens/AuthScreen.jsx";
 import {colorTheme, colorPeach} from "./baseStyle/baseStyle";
 import menu from './assets/icons/menu.svg'
 import search from './assets/icons/search.svg';
@@ -14,10 +15,15 @@ import SvgUri from 'react-native-svg-uri';
 const Stack = createStackNavigator();
 
 const App = () => {
+
+  const handlerAuth = ({navigate}) => {
+    navigate('Auth')
+  }
+
 	return (
 		<NavigationContainer>
 			<Stack.Navigator
-				screenOptions={{
+        screenOptions={({navigation}) => ({
 					headerStyle: Style.header,
 					headerTintColor: '#fff',
 					headerTitleStyle: {
@@ -42,14 +48,15 @@ const App = () => {
 
 							<TouchableOpacity style={Style.searchButton}>
 								<SvgUri
+                  width={Style.searchImage.width}
 									source={search}
 								/>
 							</TouchableOpacity>
 						</View>
 					),
-					headerRight: () => (
+					headerRight: ({navigator}) => (
 						<View style={Style.headerRight}>
-							<TouchableOpacity style={Style.auth}>
+              <TouchableOpacity onPress={() => handlerAuth(navigation)} style={Style.auth}>
 								<View style={Style.autWrapperValue}>
 									<Text style={Style.authValue}>268₴</Text>
 								</View>
@@ -68,9 +75,10 @@ const App = () => {
 							</TouchableOpacity>
 						</View>
 					)
-				}}
+				})}
 			>
 				<Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name ="Auth" options={{headerShown: false}} component={AuthScreen}/>
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
@@ -82,6 +90,7 @@ const Style = StyleSheet.create({
 	},
 	headerLeft: {
 		flexDirection: 'row',
+    alignItems: 'center',
 	},
 	menuButton: {
 		marginLeft: 16,
@@ -91,11 +100,12 @@ const Style = StyleSheet.create({
 		height: 19,
 	},
 	searchButton: {
-		width: 24,
-		height: 23,
+    alignItems: 'center',
 		marginLeft: 34,
-		alignItems: 'center',
 	},
+  searchImage: {
+    width: 24,
+  },
 	logo: {
 		width: 40,
 	},
