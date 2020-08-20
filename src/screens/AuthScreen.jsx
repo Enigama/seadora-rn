@@ -14,19 +14,29 @@ export const AuthScreen = () => {
     <SafeAreaView>
       <View>
         <View style={style.AuthHeader}>
-          <View style={style.AuthTab, {paddingTop: 5, backgroundColor: oneOfColor ? colorTheme : colorPeach}}>
-            <TouchableOpacity style={style.AuthButton}>
+          <View
+            style={[
+              style.AuthTab,
+              {
+                paddingTop: 4,
+                backgroundColor: oneOfColor ? colorTheme : colorPeach,
+              },
+            ]}
+          >
+            <View style={[style.AuthButton, {borderTopRightRadius: 8}]}>
               <Text style={style.AuthButtonText}>left</Text>
-            </TouchableOpacity>
+            </View>
           </View>
           <View style={style.AuthTab}>
             <TouchableOpacity
-              style={
-                (style.AuthButton,
-                oneOfColor ? style.AuthButtonPrimary : style.AuthButtonPeach)
-              }
+              style={[
+                style.AuthButton,
+                { backgroundColor: oneOfColor ? colorTheme : colorPeach },
+              ]}
             >
-              <Text style={style.AuthButtonText}>right</Text>
+              <Text style={[style.AuthButtonText, style.AuthButtonTextWhite]}>
+                right
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -44,25 +54,18 @@ const style = StyleSheet.create({
   AuthTab: {
     flexBasis: "50%",
   },
-  AuthTabPrimary: {
-    backgroundColor: colorTheme,
-  },
-  AuthTabPeach: {
-    backgroundColor: colorPeach,
-  },
   AuthButton: {
     flexGrow: 1,
     flexShrink: 0,
     width: "100%",
-    backgroundColor: 'white',
-  },
-  AuthButtonPrimary: {
-    backgroundColor: colorTheme,
-  },
-  AuthButtonPeach: {
-    backgroundColor: colorPeach,
+    backgroundColor: "white",
   },
   AuthButtonText: {
+    fontSize: 16,
+    lineHeight: 60,
     textAlign: "center",
+  },
+  AuthButtonTextWhite: {
+    color: "white",
   },
 });
