@@ -4,16 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { AuthScreen } from "./src/screens/AuthScreen.jsx";
+import { IS_SIGN_IN} from "./src/constants/authC";
 import { colorTheme, colorPeach } from "./baseStyle/baseStyle";
-import menu from "./assets/icons/menu.svg";
-import search from "./assets/icons/search.svg";
-import basket from "./assets/icons/basket.svg";
-import logo from "./assets/logo/log-main.svg";
-import user from "./assets/icons/user.svg";
+import { menu, search, basket, user, logo } from "./assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
 
 const Stack = createStackNavigator();
-
 const App = () => {
   const handlerAuth = ({ navigate }) => {
     navigate("Auth");
@@ -69,6 +65,7 @@ const App = () => {
           name="Auth"
           options={{ headerShown: false }}
           component={AuthScreen}
+          initialParams={{ auth: IS_SIGN_IN }}
         />
       </Stack.Navigator>
     </NavigationContainer>
