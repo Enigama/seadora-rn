@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, ActivityIndicator } from "react-native";
 import { useFonts } from "@use-expo/font";
-import { base, visueltBlack } from "../../constants/fontsC.js";
+import { base, visueltProBlack } from "../../constants/fontsC.js";
 
 export const CustomText = ({ text, fontName, propsStyle }) => {
   const [isLoaded] = useFonts({

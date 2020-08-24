@@ -19,6 +19,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={({ navigation }) => ({
+          cardStyle: {backgroundColor: 'white'},//backgroundColor for all screens
           headerStyle: Style.header,
           headerTintColor: "#fff",
           headerTitleStyle: {
