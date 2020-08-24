@@ -31,49 +31,54 @@ export const NearestCatch = () => {
 
   return (
     <View>
-      <Image source={bg} style={Style.Background} />
-      <View style={Style.Body}>
-        <View style={Style.Top}>
-          <View style={Style.Location}>
-            <SvgUri source={hongKong} style={Style.Flag} width={24} />
-            <CustomText text={"Гонконг"} propsStyle={Style.Desc} />
+      <View style={Style.FresCatch}>
+        <Image source={bg} style={Style.Background} />
+        <View style={Style.Body}>
+          <View style={Style.Top}>
+            <View style={Style.Location}>
+              <SvgUri source={hongKong} style={Style.Flag} width={24} />
+              <CustomText text={"Гонконг"} propsStyle={Style.Desc} />
+            </View>
+            <TouchableOpacity style={Style.Map}>
+              <SvgUri source={map} />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={Style.Map}>
-            <SvgUri source={map} />
-          </TouchableOpacity>
-        </View>
-        <View style={Style.Content}>
-          <View>
-            <CustomText
-              text={"Свежий улов голландских устриц"}
-              fontName={visueltProBlack}
-              propsStyle={Style.Title}
-            />
-            <CustomText
-              text={"Атлантический океан"}
-              fontName={visueltProBlack}
-              propsStyle={Style.CatchPlaceName}
-            />
-          </View>
-          <View style={Style.Bottom}>
-            <Timer />
-            <View style={Style.DeliveryWrapper}>
-              <CustomText text={"Доставка:"} propsStyle={Style.DeliveryText} />
+          <View style={Style.Content}>
+            <View>
               <CustomText
-                text={"12 сентября"}
+                text={"Свежий улов голландских устриц"}
                 fontName={visueltProBlack}
-                propsStyle={Style.DeliveryText}
+                propsStyle={Style.Title}
+              />
+              <CustomText
+                text={"Атлантический океан"}
+                fontName={visueltProBlack}
+                propsStyle={Style.CatchPlaceName}
               />
             </View>
-            <TouchableOpacity
-              onPress={() => goToFreshCatch()}
-              style={[button, Style.Button]}
-            >
-              <CustomText
-                text={"Перейти ко фрешкетчу"}
-                propsStyle={Style.ButtonText}
-              />
-            </TouchableOpacity>
+            <View style={Style.Bottom}>
+              <Timer />
+              <View style={Style.DeliveryWrapper}>
+                <CustomText
+                  text={"Доставка:"}
+                  propsStyle={Style.DeliveryText}
+                />
+                <CustomText
+                  text={"12 сентября"}
+                  fontName={visueltProBlack}
+                  propsStyle={Style.DeliveryText}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={() => goToFreshCatch()}
+                style={[button, Style.Button]}
+              >
+                <CustomText
+                  text={"Перейти ко фрешкетчу"}
+                  propsStyle={Style.ButtonText}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -82,6 +87,9 @@ export const NearestCatch = () => {
 };
 
 const Style = StyleSheet.create({
+  FresCatch: {
+    marginBottom: 24,
+  },
   Background: {
     width: "100%",
     height: 416,
