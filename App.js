@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./src/screens/HomeScreen";
 import { AuthScreen } from "./src/screens/AuthScreen.jsx";
-import { IS_SIGN_IN} from "./src/constants/authC";
+import { IS_SIGN_IN } from "./src/constants/authC";
 import { colorTheme, colorPeach } from "./baseStyle/baseStyle";
 import { menu, search, basket, user, logo } from "./assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
@@ -19,14 +19,14 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={({ navigation }) => ({
-          cardStyle: {backgroundColor: 'white'},//backgroundColor for all screens
+          cardStyle: { backgroundColor: "white" }, //backgroundColor for all screens
           headerStyle: Style.header,
           headerTintColor: "#fff",
           headerTitleStyle: {
             fontWeight: "bold",
           },
           headerTitle: () => (
-            <View>
+            <View style={Style.headerTitle}>
               <SvgUri width={Style.logo.width} source={logo} />
             </View>
           ),
@@ -76,6 +76,9 @@ const App = () => {
 const Style = StyleSheet.create({
   header: {
     backgroundColor: colorTheme,
+  },
+  headerTitle: {
+    alignItems: "center",
   },
   headerLeft: {
     flexDirection: "row",
