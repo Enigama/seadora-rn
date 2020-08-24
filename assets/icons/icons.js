@@ -5,5 +5,6 @@ import logo from "./logo/log-main.svg";
 import user from "./user.svg";
 import google from "./social/google.svg";
 import facebook from "./social/fb.svg";
+import moneyPack from "./moneyPack.svg";
 
-export { menu, search, basket, user, logo, google, facebook, };
+export { menu, search, basket, user, logo, google, facebook, moneyPack };

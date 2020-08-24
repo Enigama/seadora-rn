@@ -14,13 +14,16 @@ import { IS_SIGN_IN } from "../constants/authC.js";
 import { CustomText } from "../components/custom-text/CustomText";
 import { visueltProBlack } from "../constants/fontsC.js";
 import SvgUri from "react-native-svg-uri";
-import { google, facebook } from "../../assets/icons/icons";
+import { google, facebook, moneyPack } from "../../assets/icons/icons";
 
 export const AuthScreen = ({ navigation, route }) => {
   const [isSignIn, setIsSignIn] = useState(route.params.auth === IS_SIGN_IN);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [retryPassword, setRetryPassword] = useState("");
+  const [promocode, setPromoCode] = useState("");
+  const [showPromoCode, setShowPromoCode] = useState(false);
+
   const tabText = ["Вход", "Регистрация"];
   const pageTitle = ["Войти в аккаунт", "Зарегистрируйся"];
 
@@ -63,6 +66,14 @@ export const AuthScreen = ({ navigation, route }) => {
         console.log("Don't know how to open URI: " + url);
       }
     });
+  };
+
+  const handlerPromoCode = () => {
+    setShowPromoCode(!showPromoCode);
+  };
+
+  const textPromoCode = (text) => {
+    setPromoCode(text);
   };
 
   return (
@@ -206,6 +217,40 @@ export const AuthScreen = ({ navigation, route }) => {
                     style={style.AuthInput}
                   />
                 </View>
+                <TouchableOpacity
+                  style={style.AuthPromoCodeButton}
+                  onPress={() => handlerPromoCode()}
+                >
+                  <SvgUri source={moneyPack} />
+                  <View
+                    style={{
+                      marginLeft: 10,
+                      borderRadius: 1,
+                      borderStyle: "dashed",
+                      borderBottomWidth: 1,
+                      borderBottomColor: "#eee",
+                    }}
+                  >
+                    <CustomText
+                      text={"Промокод для скидки"}
+                      propsStyle={{
+                        fontSize: 14,
+                      }}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                {showPromoCode && (
+                  <View style={style.AuthInputField}>
+                    <TextInput
+                      onChangeText={(text) => textPromoCode(text)}
+                      value={promocode}
+                      placeholder="Введите промокод"
+                      placeholderTextColor={style.AuthInputPlaceholder.color}
+                      style={style.AuthInput}
+                    />
+                  </View>
+                )}
 
                 <TouchableOpacity
                   onPress={() => handlerAuth()}
@@ -246,7 +291,9 @@ export const AuthScreen = ({ navigation, route }) => {
                 paddingVertical: 21.5,
                 paddingHorizontal: 24,
                 borderTopWidth: 0.5,
+                borderBottomWidth: 0.5,
                 borderTopColor: "#eee",
+                borderBottomColor: "#eee",
               }}
             >
               <CustomText
@@ -312,12 +359,17 @@ const style = StyleSheet.create({
     borderRadius: 8,
   },
   AuthInput: {
+    height: 48,
     paddingHorizontal: 16,
-    paddingVertical: 16,
     fontSize: 16,
   },
   AuthInputPlaceholder: {
     color: "#a0a0a0",
+  },
+  AuthPromoCodeButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 26,
   },
   AuthRecoveryField: {
     marginBottom: 50,
@@ -348,6 +400,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 20,
+    marginBottom: 25,
   },
   AuthSocial: {
     flexBasis: 144,
