@@ -80,43 +80,43 @@ export const AuthScreen = ({ navigation, route }) => {
     <SafeAreaView
       style={{ flex: 1, paddingTop: Platform.OS === "android" ? 25 : 0 }}
     >
-      <ScrollView>
-        <View style={{ flex: 1 }}>
-          <View
-            style={[
-              style.AuthHeader,
-              isSignIn ? { marginBottom: 60 } : { marginBottom: 32 },
-              { backgroundColor: isSignIn ? colorPeach : colorTheme },
-            ]}
-          >
-            <View style={style.AuthTab}>
-              <TouchableOpacity
-                disabled={true}
-                style={[style.AuthButton, { borderTopRightRadius: 8 }]}
-              >
-                <CustomText
-                  text={isSignIn ? tabText[0] : tabText[1]}
-                  propsStyle={style.AuthButtonText}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={style.AuthTab}>
-              <TouchableOpacity
-                style={[
-                  style.AuthButton,
-                  { backgroundColor: isSignIn ? colorPeach : colorTheme },
-                ]}
-                onPress={() => togglerSignIn()}
-              >
-                <CustomText
-                  text={isSignIn ? tabText[1] : tabText[0]}
-                  propsStyle={[style.AuthButtonText, style.AuthButtonTextWhite]}
-                />
-              </TouchableOpacity>
-            </View>
+      <View style={{ flex: 1 }}>
+        <View
+          style={[
+            style.AuthHeader,
+            isSignIn ? { marginBottom: 60 } : { marginBottom: 32 },
+            { backgroundColor: isSignIn ? colorPeach : colorTheme },
+          ]}
+        >
+          <View style={style.AuthTab}>
+            <TouchableOpacity
+              disabled={true}
+              style={[style.AuthButton, { borderTopRightRadius: 8 }]}
+            >
+              <CustomText
+                text={isSignIn ? tabText[0] : tabText[1]}
+                propsStyle={style.AuthButtonText}
+              />
+            </TouchableOpacity>
           </View>
+          <View style={style.AuthTab}>
+            <TouchableOpacity
+              style={[
+                style.AuthButton,
+                { backgroundColor: isSignIn ? colorPeach : colorTheme },
+              ]}
+              onPress={() => togglerSignIn()}
+            >
+              <CustomText
+                text={isSignIn ? tabText[1] : tabText[0]}
+                propsStyle={[style.AuthButtonText, style.AuthButtonTextWhite]}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
 
-          <View style={style.AuthBody}>
+        <View style={style.AuthBody}>
+          <ScrollView>
             <CustomText
               text={isSignIn ? pageTitle[0] : pageTitle[1]}
               fontName={visueltProBlack}
@@ -248,6 +248,7 @@ export const AuthScreen = ({ navigation, route }) => {
                       placeholder="Введите промокод"
                       placeholderTextColor={style.AuthInputPlaceholder.color}
                       style={style.AuthInput}
+                      autoCapitalize="characters"
                     />
                   </View>
                 )}
@@ -284,36 +285,36 @@ export const AuthScreen = ({ navigation, route }) => {
                 </View>
               </View>
             )}
-          </View>
-          {!isSignIn && (
-            <View
-              style={{
-                paddingVertical: 21.5,
-                paddingHorizontal: 24,
-                borderTopWidth: 0.5,
-                borderBottomWidth: 0.5,
-                borderTopColor: "#eee",
-                borderBottomColor: "#eee",
-              }}
+          </ScrollView>
+        </View>
+        {!isSignIn && (
+          <View
+            style={{
+              paddingVertical: 21.5,
+              paddingHorizontal: 24,
+              borderTopWidth: 0.5,
+              borderBottomWidth: 0.5,
+              borderTopColor: "#eee",
+              borderBottomColor: "#eee",
+            }}
+          >
+            <CustomText
+              text={"Регистрируясь, вы принимаете"}
+              propsStyle={style.AuthPolicyText}
+            />
+
+            <TouchableOpacity
+              onPress={() => showPolicy()}
+              style={style.AuthPolicyButton}
             >
               <CustomText
-                text={"Регистрируясь, вы принимаете"}
+                text={"Политику конфиденциальности"}
                 propsStyle={style.AuthPolicyText}
               />
-
-              <TouchableOpacity
-                onPress={() => showPolicy()}
-                style={style.AuthPolicyButton}
-              >
-                <CustomText
-                  text={"Политику конфиденциальности"}
-                  propsStyle={style.AuthPolicyText}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
-      </ScrollView>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
     </SafeAreaView>
   );
 };
