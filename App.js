@@ -1,5 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./src/screens/HomeScreen";
@@ -10,6 +16,7 @@ import { menu, search, basket, user, logo } from "./assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
 
 const Stack = createStackNavigator();
+
 const App = () => {
   const handlerAuth = ({ navigate }) => {
     navigate("Auth");

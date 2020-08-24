@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   SafeAreaView,
   TouchableOpacity,
   StyleSheet,
   TextInput,
   Linking,
   Platform,
+  ScrollView,
 } from "react-native";
 import { colorTheme, colorPeach, button } from "../../baseStyle/baseStyle";
 import { IS_SIGN_IN } from "../constants/authC.js";
 import { CustomText } from "../components/custom-text/CustomText";
 import { visueltProBlack } from "../constants/fontsC.js";
-import * as GoogleSignIn from "expo-google-sign-in";
 import SvgUri from "react-native-svg-uri";
 import { google, facebook } from "../../assets/icons/icons";
 
@@ -21,6 +20,7 @@ export const AuthScreen = ({ navigation, route }) => {
   const [isSignIn, setIsSignIn] = useState(route.params.auth === IS_SIGN_IN);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [retryPassword, setRetryPassword] = useState("");
   const tabText = ["Вход", "Регистрация"];
   const pageTitle = ["Войти в аккаунт", "Зарегистрируйся"];
 
@@ -69,187 +69,204 @@ export const AuthScreen = ({ navigation, route }) => {
     <SafeAreaView
       style={{ flex: 1, paddingTop: Platform.OS === "android" ? 25 : 0 }}
     >
-      <View style={{ flex: 1 }}>
-        <View
-          style={[
-            style.AuthHeader,
-            isSignIn ? { marginBottom: 60 } : { marginBottom: 32 },
-          ]}
-        >
+      <ScrollView>
+        <View style={{ flex: 1 }}>
           <View
             style={[
-              style.AuthTab,
-              {
-                paddingTop: 4,
-                backgroundColor: isSignIn ? colorPeach : colorTheme,
-              },
+              style.AuthHeader,
+              isSignIn ? { marginBottom: 60 } : { marginBottom: 32 },
+              { backgroundColor: isSignIn ? colorPeach : colorTheme },
             ]}
           >
-            <TouchableOpacity
-              disabled={true}
-              style={[style.AuthButton, { borderTopRightRadius: 8 }]}
-            >
-              <CustomText
-                text={isSignIn ? tabText[0] : tabText[1]}
-                propsStyle={style.AuthButtonText}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={style.AuthTab}>
-            <TouchableOpacity
-              style={[
-                style.AuthButton,
-                { backgroundColor: isSignIn ? colorPeach : colorTheme },
-              ]}
-              onPress={() => togglerSignIn()}
-            >
-              <CustomText
-                text={isSignIn ? tabText[1] : tabText[0]}
-                propsStyle={[style.AuthButtonText, style.AuthButtonTextWhite]}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={style.AuthBody}>
-          <CustomText
-            text={isSignIn ? pageTitle[0] : pageTitle[1]}
-            fontName={visueltProBlack}
-            propsStyle={style.AuthTitle}
-          />
-
-          {isSignIn ? (
-            <>
-              <View style={style.AuthInputField}>
-                <TextInput
-                  onChangeText={(text) => handlerEmail(text)}
-                  placeholder="Email"
-                  placeholderTextColor={style.AuthInputPlaceholder.color}
-                  style={style.AuthInput}
-                />
-              </View>
-
-              <View style={style.AuthInputField}>
-                <TextInput
-                  onChangeText={(text) => handlerPassword(text)}
-                  placeholder="Пароль"
-                  placeholderTextColor={style.AuthInputPlaceholder.color}
-                  style={style.AuthInput}
-                />
-              </View>
-
+            <View style={style.AuthTab}>
               <TouchableOpacity
-                onPress={() => handlerRecovery()}
-                style={style.AuthRecoveryField}
+                disabled={true}
+                style={[style.AuthButton, { borderTopRightRadius: 8 }]}
               >
                 <CustomText
-                  text={"Восстановить пароль"}
-                  propsStyle={style.AuthRecoveryText}
+                  text={isSignIn ? tabText[0] : tabText[1]}
+                  propsStyle={style.AuthButtonText}
                 />
               </TouchableOpacity>
-
+            </View>
+            <View style={style.AuthTab}>
               <TouchableOpacity
-                onPress={() => handlerAuth()}
-                style={style.AuthSignIn}
-              >
-                <CustomText text={"Войти"} propsStyle={style.AuthSignInText} />
-              </TouchableOpacity>
-
-              <CustomText
-                text={"или войти через:"}
-                propsStyle={style.AuthOrSignIn}
-              />
-
-              <View style={style.AuthSocialWrapper}>
-                <TouchableOpacity
-                  onPress={() => googleAuth()}
-                  style={style.AuthSocial}
-                >
-                  <SvgUri source={google} />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => facebookAuth()}
-                  style={style.AuthSocial}
-                >
-                  <SvgUri source={facebook} />
-                </TouchableOpacity>
-              </View>
-            </>
-          ) : (
-            <View style={{ height: 100 }}>
-              <View style={style.AuthInputField}>
-                <TextInput
-                  onChangeText={(text) => handlerEmail(text)}
-                  placeholder="Email"
-                  placeholderTextColor={style.AuthInputPlaceholder.color}
-                  style={style.AuthInput}
-                />
-              </View>
-
-              <View style={style.AuthInputField}>
-                <TextInput
-                  onChangeText={(text) => handlerPassword(text)}
-                  placeholder="Придумай пароль"
-                  placeholderTextColor={style.AuthInputPlaceholder.color}
-                  style={style.AuthInput}
-                />
-              </View>
-
-              <View style={style.AuthInputField}>
-                <TextInput
-                  onChangeText={(text) => handlerPassword(text)}
-                  placeholder="Повтори пароль"
-                  placeholderTextColor={style.AuthInputPlaceholder.color}
-                  style={style.AuthInput}
-                />
-              </View>
-
-              <TouchableOpacity
-                onPress={() => handlerAuth()}
-                style={[style.AuthSignIn, { backgroundColor: colorPeach }]}
+                style={[
+                  style.AuthButton,
+                  { backgroundColor: isSignIn ? colorPeach : colorTheme },
+                ]}
+                onPress={() => togglerSignIn()}
               >
                 <CustomText
-                  text={"Зарегистрироваться"}
-                  propsStyle={style.AuthSignInText}
+                  text={isSignIn ? tabText[1] : tabText[0]}
+                  propsStyle={[style.AuthButtonText, style.AuthButtonTextWhite]}
                 />
               </TouchableOpacity>
+            </View>
+          </View>
 
+          <View style={style.AuthBody}>
+            <CustomText
+              text={isSignIn ? pageTitle[0] : pageTitle[1]}
+              fontName={visueltProBlack}
+              propsStyle={style.AuthTitle}
+            />
+
+            {isSignIn ? (
+              <>
+                <View style={style.AuthInputField}>
+                  <TextInput
+                    onChangeText={(text) => handlerEmail(text)}
+                    value={email}
+                    placeholder="Email"
+                    placeholderTextColor={style.AuthInputPlaceholder.color}
+                    style={style.AuthInput}
+                  />
+                </View>
+
+                <View style={style.AuthInputField}>
+                  <TextInput
+                    onChangeText={(text) => handlerPassword(text)}
+                    value={password}
+                    placeholder="Пароль"
+                    placeholderTextColor={style.AuthInputPlaceholder.color}
+                    style={style.AuthInput}
+                  />
+                </View>
+
+                <TouchableOpacity
+                  onPress={() => handlerRecovery()}
+                  style={style.AuthRecoveryField}
+                >
+                  <CustomText
+                    text={"Восстановить пароль"}
+                    propsStyle={style.AuthRecoveryText}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => handlerAuth()}
+                  style={style.AuthSignIn}
+                >
+                  <CustomText
+                    text={"Войти"}
+                    propsStyle={style.AuthSignInText}
+                  />
+                </TouchableOpacity>
+
+                <CustomText
+                  text={"или войти через:"}
+                  propsStyle={style.AuthOrSignIn}
+                />
+
+                <View style={style.AuthSocialWrapper}>
+                  <TouchableOpacity
+                    onPress={() => googleAuth()}
+                    style={style.AuthSocial}
+                  >
+                    <SvgUri source={google} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => facebookAuth()}
+                    style={style.AuthSocial}
+                  >
+                    <SvgUri source={facebook} />
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : (
+              <View style={{}}>
+                <View style={style.AuthInputField}>
+                  <TextInput
+                    onChangeText={(text) => handlerEmail(text)}
+                    value={email}
+                    placeholder="Email"
+                    placeholderTextColor={style.AuthInputPlaceholder.color}
+                    style={style.AuthInput}
+                  />
+                </View>
+
+                <View style={style.AuthInputField}>
+                  <TextInput
+                    onChangeText={(text) => handlerPassword(text)}
+                    value={password}
+                    placeholder="Придумай пароль"
+                    placeholderTextColor={style.AuthInputPlaceholder.color}
+                    style={style.AuthInput}
+                  />
+                </View>
+
+                <View style={style.AuthInputField}>
+                  <TextInput
+                    onChangeText={(text) => handlerPassword(text)}
+                    value={retryPassword}
+                    placeholder="Повтори пароль"
+                    placeholderTextColor={style.AuthInputPlaceholder.color}
+                    style={style.AuthInput}
+                  />
+                </View>
+
+                <TouchableOpacity
+                  onPress={() => handlerAuth()}
+                  style={[style.AuthSignIn, { backgroundColor: colorPeach }]}
+                >
+                  <CustomText
+                    text={"Зарегистрироваться"}
+                    propsStyle={style.AuthSignInText}
+                  />
+                </TouchableOpacity>
+
+                <CustomText
+                  text={"или зарегистрируйся через:"}
+                  propsStyle={style.AuthOrSignIn}
+                />
+
+                <View style={style.AuthSocialWrapper}>
+                  <TouchableOpacity
+                    onPress={() => googleAuth()}
+                    style={style.AuthSocial}
+                  >
+                    <SvgUri source={google} />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => facebookAuth()}
+                    style={style.AuthSocial}
+                  >
+                    <SvgUri source={facebook} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+          </View>
+          {!isSignIn && (
+            <View
+              style={{
+                paddingVertical: 21.5,
+                paddingHorizontal: 24,
+                borderTopWidth: 0.5,
+                borderTopColor: "#eee",
+              }}
+            >
               <CustomText
-                text={"или зарегистрируйся через:"}
-                propsStyle={style.AuthOrSignIn}
+                text={"Регистрируясь, вы принимаете"}
+                propsStyle={style.AuthPolicyText}
               />
 
-              <View style={style.AuthSocialWrapper}>
-                <TouchableOpacity
-                  onPress={() => googleAuth()}
-                  style={style.AuthSocial}
-                >
-                  <SvgUri source={google} />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  onPress={() => facebookAuth()}
-                  style={style.AuthSocial}
-                >
-                  <SvgUri source={facebook} />
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                onPress={() => showPolicy()}
+                style={style.AuthPolicyButton}
+              >
+                <CustomText
+                  text={"Политику конфиденциальности"}
+                  propsStyle={style.AuthPolicyText}
+                />
+              </TouchableOpacity>
             </View>
           )}
         </View>
-        {!isSignIn && (
-          <View
-            style={{ position: "absolute", bottom: 0, paddingHorizontal: 24 }}
-          >
-            <CustomText text={"Регистрируясь, вы принимаете"} />
-
-            <TouchableOpacity onPress={() => showPolicy()}>
-              <CustomText text={"Политику конфиденциальности"} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -262,6 +279,7 @@ const style = StyleSheet.create({
   },
   AuthTab: {
     flexBasis: "50%",
+    paddingTop: 4,
   },
   AuthButton: {
     flexGrow: 1,
@@ -280,7 +298,7 @@ const style = StyleSheet.create({
     color: "white",
   },
   AuthBody: {
-    //height: "100%",
+    flex: 1,
     paddingHorizontal: 24,
   },
   AuthTitle: {
@@ -337,5 +355,14 @@ const style = StyleSheet.create({
     paddingVertical: 12,
     backgroundColor: "#f5f5f5",
     borderRadius: 8,
+  },
+  AuthPolicyText: {
+    fontSize: 12,
+    color: "#a0a0a0",
+  },
+  AuthPolicyButton: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+    alignSelf: "flex-start",
   },
 });
