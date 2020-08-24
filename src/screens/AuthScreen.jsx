@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   Linking,
+  Platform,
 } from "react-native";
 import { colorTheme, colorPeach, button } from "../../baseStyle/baseStyle";
 import { IS_SIGN_IN } from "../constants/authC.js";
@@ -53,19 +54,21 @@ export const AuthScreen = ({ navigation, route }) => {
 
   const showPolicy = () => {
     console.log("showPolicy");
-    const url = "https://seadora.com.ua/privacy-policy"
+    const url = "https://seadora.com.ua/privacy-policy";
 
-    Linking.canOpenURL(url).then(supported => {
+    Linking.canOpenURL(url).then((supported) => {
       if (supported) {
         Linking.openURL(url);
       } else {
-        console.log('Don\'t know how to open URI: ' + url);
+        console.log("Don't know how to open URI: " + url);
       }
     });
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: Platform.OS === "android" ? 25 : 0 }}
+    >
       <View style={{ flex: 1 }}>
         <View
           style={[
@@ -236,9 +239,11 @@ export const AuthScreen = ({ navigation, route }) => {
           )}
         </View>
         {!isSignIn && (
-          <View style={{ position: "absolute", bottom: 0, paddingHorizontal: 24 }}>
+          <View
+            style={{ position: "absolute", bottom: 0, paddingHorizontal: 24 }}
+          >
             <CustomText text={"Регистрируясь, вы принимаете"} />
-              
+
             <TouchableOpacity onPress={() => showPolicy()}>
               <CustomText text={"Политику конфиденциальности"} />
             </TouchableOpacity>
