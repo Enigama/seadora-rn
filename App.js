@@ -9,7 +9,8 @@ import {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeScreen } from "./src/screens/HomeScreen";
-import { AuthScreen } from "./src/screens/AuthScreen.jsx";
+import { AuthScreen } from "./src/screens/AuthScreen";
+import { FreshCatchesScreen } from "./src/screens/FreshCatchesScreen";
 import { IS_SIGN_IN } from "./src/constants/authC";
 import { colorTheme, colorPeach } from "./baseStyle/baseStyle";
 import { menu, search, basket, user, logo } from "./assets/icons/icons";
@@ -75,6 +76,7 @@ const App = () => {
           component={AuthScreen}
           initialParams={{ auth: IS_SIGN_IN }}
         />
+        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
