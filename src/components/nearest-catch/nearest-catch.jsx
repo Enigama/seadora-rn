@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, ImageBackground } from "react-native";
 import { CustomText } from "../custom-text/CustomText";
 import flags from "../../../assets/icons/flags.js";
 import hongKong from "./hongkong.svg";
@@ -32,7 +32,8 @@ export const NearestCatch = () => {
   return (
     <View>
       <View style={Style.FresCatch}>
-        <Image source={bg} style={Style.Background} />
+        {/*<Image source={bg} style={Style.Background} />*/}
+        <ImageBackground style={Style.Background} source={bg}>
         <View style={Style.Body}>
           <View style={Style.Top}>
             <View style={Style.Location}>
@@ -57,7 +58,10 @@ export const NearestCatch = () => {
               />
             </View>
             <View style={Style.Bottom}>
-              <Timer />
+              <CustomText text={"Собираем предзаказ еще"} propsStyle={Style.Preorder}/>
+              <View style={Style.Timer}>
+                <Timer />
+              </View>
               <View style={Style.DeliveryWrapper}>
                 <CustomText
                   text={"Доставка:"}
@@ -81,6 +85,7 @@ export const NearestCatch = () => {
             </View>
           </View>
         </View>
+      </ImageBackground>
       </View>
     </View>
   );
@@ -92,14 +97,9 @@ const Style = StyleSheet.create({
   },
   Background: {
     width: "100%",
-    height: 416,
     resizeMode: "cover",
   },
   Body: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    height: "100%",
     paddingHorizontal: 24,
     paddingTop: 21,
     paddingBottom: 32,
@@ -128,6 +128,7 @@ const Style = StyleSheet.create({
     color: "white",
   },
   CatchPlaceName: {
+    marginBottom: 19,
     fontSize: 16,
     color: "white",
   },
@@ -135,6 +136,14 @@ const Style = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-between",
+  },
+  Preorder: {
+    marginBottom: 12,
+    fontSize: 14,
+    color: 'white',
+  },
+  Timer: {
+    marginBottom: 18,
   },
   DeliveryWrapper: {
     marginBottom: 14,
