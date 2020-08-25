@@ -5,7 +5,10 @@ import { colorTheme } from "../../../baseStyle/baseStyle.js";
 
 export const Timer = () => {
   const [dateFinish, setDateFinish] = useState(new Date(1600999453 * 1000))
-  const [date, setDate] = useState({day: 0, hour: 0, min: 0, sec: 0});
+  const [day, setDay] = useState(0);
+  const [hour, setHour] = useState(0);
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
   
   useEffect(() => {
     const timeinterval = setInterval(updateTimer, 1000);
@@ -15,7 +18,10 @@ export const Timer = () => {
       const hours = ('0' + t.hours).slice(-2);
       const minutes = ('0' + t.minutes).slice(-2);
       const seconds = ('0' + t.seconds).slice(-2);
-      setDate({day: days, hour: hours, min: minutes, sec: seconds})
+      setDay(days);
+      setHour(hours);
+      setMin(minutes);
+      setSec(seconds);
     }
 
     function getTimeRemaining(){
@@ -24,7 +30,7 @@ export const Timer = () => {
       const minutes = Math.floor((t / 1000 / 60) % 60);
       const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
       const days = Math.floor(t / (1000 * 60 * 60 * 24));
-      //console.log(t, days, hours, minutes, seconds)
+      console.log(t, days, hours, minutes, seconds)
 
       return {
         'total': t,
@@ -34,23 +40,25 @@ export const Timer = () => {
         'seconds': seconds
       };
     }
-    return () => clearInterval(timeinterval)
-  });
+    return () => {
+      window.clearInterval(timeinterval)
+    }
+  }, []);
 
   return (
     <View style={Style.TimerRow}>
       <View style={Style.TimerBlock}>
-        <CustomText text={date.day} propsStyle={Style.TimerNumber} />
+        <CustomText text={day} propsStyle={Style.TimerNumber} />
         <CustomText text={"дней"} propsStyle={Style.TimerDesc} />
       </View>
 
       <View style={Style.TimerBlock}>
-        <CustomText text={date.hour} propsStyle={Style.TimerNumber} />
+        <CustomText text={hour} propsStyle={Style.TimerNumber} />
         <CustomText text={"часов"} propsStyle={Style.TimerDesc} />
       </View>
 
       <View style={Style.TimerBlock}>
-        <CustomText text={date.min} propsStyle={Style.TimerNumber} />
+        <CustomText text={min} propsStyle={Style.TimerNumber} />
         <CustomText text={"минут"} propsStyle={Style.TimerDesc} />
       </View>
     </View>
