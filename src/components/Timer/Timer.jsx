@@ -3,8 +3,8 @@ import { View, StyleSheet } from "react-native";
 import { CustomText } from "../custom-text/CustomText";
 import { colorTheme } from "../../../baseStyle/baseStyle.js";
 
-export const Timer = () => {
-  const [dateFinish, setDateFinish] = useState(new Date(1600999453 * 1000))
+export const Timer = ({finishDate}) => {
+  const [dateFinish, setDateFinish] = useState(new Date(finishDate * 1000))
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
@@ -41,7 +41,7 @@ export const Timer = () => {
       };
     }
     return () => {
-      window.clearInterval(timeinterval)
+      clearInterval(timeinterval)
     }
   }, []);
 

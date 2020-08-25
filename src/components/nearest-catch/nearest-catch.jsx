@@ -13,17 +13,33 @@ import { button, colorPeach } from "../../../baseStyle/baseStyle";
 export const NearestCatch = () => {
   const [freshCatches, setFreshCatches] = useState([
     {
-      id: Date.now(),
+      id: new Date().getTime(),
       location: {
         icon: flags.ru,
-        name: "",
+        name: "Гонконг",
       },
-      name: "",
-      catchPlaceName: "",
+      name: "Свежий улов голландских устриц",
+      catchPlaceName: "Атлантический океан",
       points: [""],
       finishDate: null,
-      deliveryDate: "",
-      freshCatchePicture: "",
+      finishDate: "1600999453 ",
+      deliveryDate: "12 сентября",
+      freshCatchePicture: bg,
+    },
+
+    {
+      id: new Date().getTime(),
+      location: {
+        icon: flags.ru,
+        name: "Гонконг",
+      },
+      name: "Свежий улов голландских устриц",
+      catchPlaceName: "Атлантический океан",
+      points: [""],
+      finishDate: null,
+      finishDate: "1600999453 ",
+      deliveryDate: "12 сентября",
+      freshCatchePicture: bg,
     },
   ]);
 
@@ -31,14 +47,14 @@ export const NearestCatch = () => {
 
   return (
     <View>
-      <View style={Style.FresCatch}>
-        {/*<Image source={bg} style={Style.Background} />*/}
+      {freshCatches.map((item,i) => (
+      <View style={[i%2 === 1 ? {marginTop: 24} : null]} key={item.id}>
         <ImageBackground style={Style.Background} source={bg}>
         <View style={Style.Body}>
           <View style={Style.Top}>
             <View style={Style.Location}>
               <SvgUri source={hongKong} style={Style.Flag} width={24} />
-              <CustomText text={"Гонконг"} propsStyle={Style.Desc} />
+              <CustomText text={item.location.name} propsStyle={Style.Desc} />
             </View>
             <TouchableOpacity style={Style.Map}>
               <SvgUri source={map} />
@@ -47,12 +63,12 @@ export const NearestCatch = () => {
           <View style={Style.Content}>
             <View>
               <CustomText
-                text={"Свежий улов голландских устриц"}
+                text={item.name}
                 fontName={visueltProBlack}
                 propsStyle={Style.Title}
               />
               <CustomText
-                text={"Атлантический океан"}
+                text={item.catchPlaceName}
                 fontName={visueltProBlack}
                 propsStyle={Style.CatchPlaceName}
               />
@@ -60,7 +76,7 @@ export const NearestCatch = () => {
             <View style={Style.Bottom}>
               <CustomText text={"Собираем предзаказ еще"} propsStyle={Style.Preorder}/>
               <View style={Style.Timer}>
-                <Timer />
+                <Timer finishDate={item.finishDate}/>
               </View>
               <View style={Style.DeliveryWrapper}>
                 <CustomText
@@ -68,7 +84,7 @@ export const NearestCatch = () => {
                   propsStyle={Style.DeliveryText}
                 />
                 <CustomText
-                  text={"12 сентября"}
+                  text={item.deliveryDate}
                   fontName={visueltProBlack}
                   propsStyle={Style.DeliveryText}
                 />
@@ -87,14 +103,12 @@ export const NearestCatch = () => {
         </View>
       </ImageBackground>
       </View>
+      ))}
     </View>
   );
 };
 
 const Style = StyleSheet.create({
-  FresCatch: {
-    marginBottom: 24,
-  },
   Background: {
     width: "100%",
     resizeMode: "cover",
