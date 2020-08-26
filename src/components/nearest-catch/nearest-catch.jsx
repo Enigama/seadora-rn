@@ -9,6 +9,7 @@ import { map } from "../../../assets/icons/icons";
 import { visueltProBlack } from "../../constants/fontsC";
 import { Timer } from "../Timer/Timer";
 import { button, colorPeach } from "../../../baseStyle/baseStyle";
+import { useNavigation } from '@react-navigation/native';
 
 export const NearestCatch = () => {
   const [freshCatches, setFreshCatches] = useState([
@@ -42,8 +43,11 @@ export const NearestCatch = () => {
       freshCatchePicture: bg,
     },
   ]);
-
-  const goToFreshCatch = () => {};
+  const navigation = useNavigation();
+  const goToFreshCatch = () => {
+    console.log(navigation)
+    navigation.navigate('FresCatches')
+  };
 
   return (
     <View>

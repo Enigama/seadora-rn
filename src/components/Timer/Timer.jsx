@@ -12,7 +12,7 @@ export const Timer = ({finishDate}) => {
   
   useEffect(() => {
     const timeinterval = setInterval(updateTimer, 1000);
-    console.log('timeinterval init', timeinterval)
+    //console.log('timeinterval init', timeinterval)
     function updateTimer(){
       const t = getTimeRemaining();
       const days = t.days;
@@ -31,7 +31,6 @@ export const Timer = ({finishDate}) => {
       const minutes = Math.floor((t / 1000 / 60) % 60);
       const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
       const days = Math.floor(t / (1000 * 60 * 60 * 24));
-      console.log(t, days, hours, minutes, seconds)
 
       return {
         'total': t,
@@ -42,7 +41,6 @@ export const Timer = ({finishDate}) => {
       };
     }
     return () => {
-      console.log('clear', timeinterval)
       clearInterval(timeinterval)
     }
   }, [day, hour, min, sec]);
