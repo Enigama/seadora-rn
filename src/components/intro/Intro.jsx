@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import bgImage from "./intro.jpg";
-import { colorPeach } from "../../../baseStyle/baseStyle";
+import { colors } from "../../../baseStyle/baseStyle";
 
 const Intro = () => {
   return (
@@ -61,7 +61,7 @@ const Style = StyleSheet.create({
     marginTop: 36,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colorPeach,
+    backgroundColor: colors.peach,
     borderRadius: 8,
   },
   fcText: {

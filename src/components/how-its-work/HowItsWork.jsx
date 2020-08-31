@@ -9,9 +9,9 @@ import search from "./search.svg";
 import fish from "./fish.svg";
 import arrow from "./arrow.svg";
 import { visueltProBlack } from "../../constants/fontsC";
-import { colorTheme } from "../../../baseStyle/baseStyle";
+import { colors } from "../../../baseStyle/baseStyle";
 
-export const HowItsWork = () => {
+const HowItsWork = () => {
   return (
     <View style={Style.block}>
       <CustomText
@@ -19,7 +19,7 @@ export const HowItsWork = () => {
         fontName={visueltProBlack}
         propsStyle={Style.headline}
       />
-      <Slick height={170} dotColor={"#e9e9e9"} activeDotColor={colorTheme}>
+      <Slick height={170} dotColor={"#e9e9e9"} activeDotColor={colors.theme}>
         <View style={Style.wrapper}>
           <View style={Style.icons}>
             <SvgUri source={fisherman} />
@@ -111,9 +111,11 @@ const Style = StyleSheet.create({
     marginTop: 8,
     marginBottom: 6,
     fontSize: 18,
-    color: colorTheme,
+    color: colors.theme,
   },
   text: {
     fontSize: 14,
   },
 });
+
+export default HowItsWork;

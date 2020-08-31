@@ -8,10 +8,10 @@ import bg from "./bg.jpg";
 import { map } from "../../../assets/icons/icons";
 import { visueltProBlack } from "../../constants/fontsC";
 import { Timer } from "../Timer/Timer";
-import { button, colorPeach } from "../../../baseStyle/baseStyle";
+import { button, colors } from "../../../baseStyle/baseStyle";
 import { useNavigation } from '@react-navigation/native';
 
-export const NearestCatch = () => {
+const NearestCatch = () => {
   const [freshCatches, setFreshCatches] = useState([
     {
       id: new Date().getTime(),
@@ -78,7 +78,7 @@ export const NearestCatch = () => {
               />
             </View>
             <View style={Style.Bottom}>
-              <CustomText text={"Собираем предзаказ еще"} propsStyle={Style.Preorder}/>
+              <CustomText text={"Собираем предзаказ еще:"} propsStyle={Style.Preorder}/>
               <View style={Style.Timer}>
                 <Timer finishDate={item.finishDate}/>
               </View>
@@ -111,6 +111,7 @@ export const NearestCatch = () => {
     </View>
   );
 };
+
 
 const Style = StyleSheet.create({
   Background: {
@@ -174,7 +175,7 @@ const Style = StyleSheet.create({
     color: "white",
   },
   Button: {
-    backgroundColor: colorPeach,
+    backgroundColor: colors.peach,
   },
   ButtonText: {
     fontSize: 14,
@@ -182,3 +183,5 @@ const Style = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+export default NearestCatch;

@@ -9,7 +9,7 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import { colorTheme, colorPeach, button } from "../../baseStyle/baseStyle";
+import { colors, button} from "../../baseStyle/baseStyle";
 import { IS_SIGN_IN } from "../constants/authC.js";
 import { CustomText } from "../components/custom-text/CustomText";
 import { visueltProBlack } from "../constants/fontsC.js";
@@ -85,7 +85,7 @@ export const AuthScreen = ({ navigation, route }) => {
           style={[
             style.AuthHeader,
             isSignIn ? { marginBottom: 60 } : { marginBottom: 32 },
-            { backgroundColor: isSignIn ? colorPeach : colorTheme },
+            { backgroundColor: isSignIn ? colors.peach : colors.theme },
           ]}
         >
           <View style={style.AuthTab}>
@@ -103,7 +103,7 @@ export const AuthScreen = ({ navigation, route }) => {
             <TouchableOpacity
               style={[
                 style.AuthButton,
-                { backgroundColor: isSignIn ? colorPeach : colorTheme },
+                { backgroundColor: isSignIn ? colors.peach : colors.theme },
               ]}
               onPress={() => togglerSignIn()}
             >
@@ -255,7 +255,7 @@ export const AuthScreen = ({ navigation, route }) => {
 
                 <TouchableOpacity
                   onPress={() => handlerAuth()}
-                  style={[style.AuthSignIn, { backgroundColor: colorPeach }]}
+                  style={[style.AuthSignIn, { backgroundColor: colors.peach }]}
                 >
                   <CustomText
                     text={"Зарегистрироваться"}
@@ -385,7 +385,7 @@ const style = StyleSheet.create({
   AuthSignIn: {
     ...button,
     marginBottom: 30,
-    backgroundColor: colorTheme,
+    backgroundColor: colors.theme,
   },
   AuthSignInText: {
     fontSize: 18,

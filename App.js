@@ -12,7 +12,7 @@ import { HomeScreen } from "./src/screens/HomeScreen";
 import { AuthScreen } from "./src/screens/AuthScreen";
 import { FreshCatchesScreen } from "./src/screens/FreshCatchesScreen";
 import { IS_SIGN_IN } from "./src/constants/authC";
-import { colorTheme, colorPeach } from "./baseStyle/baseStyle";
+import { colors } from "./baseStyle/baseStyle";
 import { menu, search, basket, user, logo } from "./assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
 
@@ -84,7 +84,7 @@ const App = () => {
 
 const Style = StyleSheet.create({
   header: {
-    backgroundColor: colorTheme,
+    backgroundColor: colors.theme,
   },
   headerTitle: {
     alignItems: "center",
@@ -125,7 +125,7 @@ const Style = StyleSheet.create({
     height: 18,
     paddingHorizontal: 5,
     paddingVertical: 2,
-    backgroundColor: colorPeach,
+    backgroundColor: colors.peach,
     borderRadius: 10,
     zIndex: 5,
   },
@@ -149,7 +149,7 @@ const Style = StyleSheet.create({
     right: 0,
     paddingHorizontal: 5,
     paddingVertical: 2,
-    backgroundColor: colorPeach,
+    backgroundColor: colors.peach,
     color: "#fff",
     fontSize: 12,
     borderRadius: 10,
