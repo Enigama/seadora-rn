@@ -1,36 +1,51 @@
-import React, {useState, useEffect, useRef, } from "react";
-import {View, StyleSheet, Image, Animated, } from "react-native";
-import {marks} from "../../../assets/icons/marks";
+import React, { useState, useEffect, useRef } from "react";
+import { View, StyleSheet, Image, Animated, Easing } from "react-native";
+import { marks } from "../../../assets/icons/marks";
 import SvgUri from "react-native-svg-uri";
 
 const Marks = () => {
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(-10)).current;
 
-  useEffect(() => {
+  const initAnimate = (delay) => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 5000,
+      duration: delay 
     }).start();
-  })
-  return(
+  };
+  return (
     <>
       <View style={Style.List}>
-        {
-          Object.values(marks).map((marker, index) =>(
-            <Animated.View style={{opacity: fadeAnim}}>
-              <SvgUri style={{marginLeft: index !== 0 ? 11 : 0}} source={marker} width={62} key={marker}/>
+        {Object.values(marks).map((marker, index) => {
+          return (
+            <Animated.View
+              key={index.toString()}
+              style={{
+                transform: [
+                  {
+                    translateY: fadeAnim,
+                  },
+                ],
+              }}
+            >
+              <SvgUri
+                style={{ marginLeft: index !== 0 ? 11 : 0 }}
+                source={marker}
+                width={62}
+              />
             </Animated.View>
-          ))
-        }
+          )
+        })}
       </View>
     </>
-  )
+  );
 };
 
 const Style = StyleSheet.create({
   List: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 5,
+    paddingBottom: 10,
   },
 });
 

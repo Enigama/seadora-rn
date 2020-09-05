@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
+  Modal,
 } from "react-native";
 import {CustomText} from "../components/custom-text/CustomText";
 import Marks from "../components/marks/Marks";
@@ -18,8 +19,10 @@ import {Timer} from "../components/Timer/Timer";
 import { button, colors } from "../../baseStyle/baseStyle";
 import { useNavigation } from '@react-navigation/native';
 import Tags from "../components/Tags/Tags";
+import MapView from 'react-native-maps';
 
 export const FreshCatchesScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [freshCatches, setFreshCatches] = useState([
     {
       id: new Date().getTime(),
@@ -59,6 +62,21 @@ export const FreshCatchesScreen = () => {
     navigation.navigate('FresCatches')
   };
 
+  const showMap = () => {
+    setModalVisible(true)
+  };
+
+  if(modalVisible){
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+      >
+        <MapView style={{width: 200, height: 200}}></MapView>
+      </Modal>
+    )
+  }
   return (
     <ScrollView style={Style.Wrapper}>
       <CustomText
@@ -78,7 +96,7 @@ export const FreshCatchesScreen = () => {
                   <SvgUri source={hongKong} style={Style.Flag} width={24} />
                   <CustomText text={item.location.name} propsStyle={Style.Desc} />
                 </View>
-                <TouchableOpacity style={Style.Map}>
+                <TouchableOpacity style={Style.Map} onPress={() => showMap()} >
                   <SvgUri source={map} />
                 </TouchableOpacity>
               </View>
