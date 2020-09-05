@@ -34,9 +34,12 @@ const App = () => {
             fontWeight: "bold",
           },
           headerTitle: () => (
-            <View style={Style.headerTitle}>
+            <TouchableOpacity
+              style={Style.headerTitle}
+              onPress={() => navigation.navigate("Home")}
+            >
               <SvgUri width={Style.logo.width} source={logo} />
-            </View>
+            </TouchableOpacity>
           ),
           headerLeft: () => (
             <View style={Style.headerLeft}>
@@ -70,13 +73,13 @@ const App = () => {
         })}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
         <Stack.Screen
           name="Auth"
           options={{ headerShown: false }}
           component={AuthScreen}
           initialParams={{ auth: IS_SIGN_IN }}
         />
-        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

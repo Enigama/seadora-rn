@@ -5,9 +5,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   ScrollView,
-  Modal,
 } from "react-native";
-import {CustomText} from "../components/custom-text/CustomText";
+import { CustomText } from "../components/custom-text/CustomText";
 import Marks from "../components/marks/Marks";
 import flags from "../../assets/icons/flags";
 import hongKong from "./hongkong.svg";
@@ -15,14 +14,16 @@ import SvgUri from "react-native-svg-uri";
 import bg from "./bg.jpg";
 import { map } from "../../assets/icons/icons";
 import { visueltProBlack } from "../constants/fontsC";
-import {Timer} from "../components/Timer/Timer";
+import { Timer } from "../components/Timer/Timer";
 import { button, colors } from "../../baseStyle/baseStyle";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import Tags from "../components/Tags/Tags";
-import MapView from 'react-native-maps';
+import Map from "../components/map/Map";
+import Popup from "../components/popup/Popup";
 
 export const FreshCatchesScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState({});
   const [freshCatches, setFreshCatches] = useState([
     {
       id: new Date().getTime(),
@@ -56,29 +57,30 @@ export const FreshCatchesScreen = () => {
   ]);
   const navigation = useNavigation();
 
-  console.log(freshCatches)
   const goToFreshCatch = () => {
-    console.log(navigation)
-    navigation.navigate('FresCatches')
+    navigation.navigate("FresCatches");
   };
 
-  const showMap = () => {
-    setModalVisible(true)
+  const showMap = (title, description = "") => {
+    setModalVisible(true);
+    setModalContent({ title, description });
   };
 
-  if(modalVisible){
-    return (
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <MapView style={{width: 200, height: 200}}></MapView>
-      </Modal>
-    )
-  }
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <ScrollView style={Style.Wrapper}>
+      {modalVisible ? (
+        <Popup handlerClose={closeModal} content={modalContent}>
+          <Map
+            propsStyle={{
+              height: 400,
+            }}
+          />
+        </Popup>
+      ) : null}
       <CustomText
         text={"Fresh Catch"}
         fontName={visueltProBlack}
@@ -87,63 +89,75 @@ export const FreshCatchesScreen = () => {
       <Tags />
 
       <View style={Style.Catches}>
-        {freshCatches.map((item,i) => (
-          <View style={[i%2 === 1 ? {marginTop: 24} : null]} key={item.id}>
+        {freshCatches.map((item, i) => (
+          <View style={[i % 2 === 1 ? { marginTop: 24 } : null]} key={item.id}>
             <ImageBackground style={Style.Background} source={bg}>
-            <View style={Style.Body}>
-              <View style={Style.Top}>
-                <View style={Style.Location}>
-                  <SvgUri source={hongKong} style={Style.Flag} width={24} />
-                  <CustomText text={item.location.name} propsStyle={Style.Desc} />
-                </View>
-                <TouchableOpacity style={Style.Map} onPress={() => showMap()} >
-                  <SvgUri source={map} />
-                </TouchableOpacity>
-              </View>
-              <View style={Style.Content}>
-                <View>
-                  <CustomText
-                    text={item.name}
-                    fontName={visueltProBlack}
-                    propsStyle={Style.Title}
-                  />
-                  <CustomText
-                    text={item.catchPlaceName}
-                    fontName={visueltProBlack}
-                    propsStyle={Style.CatchPlaceName}
-                  />
-                </View>
-                <View style={Style.Bottom}>
-                  <CustomText text={"Состав улова"} propsStyle={Style.Preorder}/>
-                  <Marks />
-                  <CustomText text={"Собираем предзаказ еще:"} propsStyle={Style.Preorder}/>
-                  <View style={Style.Timer}>
-                    <Timer finishDate={item.finishDate}/>
-                  </View>
-                  <View style={Style.DeliveryWrapper}>
+              <View style={Style.Body}>
+                <View style={Style.Top}>
+                  <View style={Style.Location}>
+                    <SvgUri source={hongKong} style={Style.Flag} width={24} />
                     <CustomText
-                      text={"Доставка:"}
-                      propsStyle={Style.DeliveryText}
-                    />
-                    <CustomText
-                      text={item.deliveryDate}
-                      fontName={visueltProBlack}
-                      propsStyle={Style.DeliveryText}
+                      text={item.location.name}
+                      propsStyle={Style.Desc}
                     />
                   </View>
                   <TouchableOpacity
-                    onPress={() => goToFreshCatch()}
-                    style={[button, Style.Button]}
+                    style={Style.Map}
+                    onPress={() => showMap(item.name, item.catchPlaceName)}
                   >
-                    <CustomText
-                      text={"Посмотреть улов"}
-                      propsStyle={Style.ButtonText}
-                    />
+                    <SvgUri source={map} />
                   </TouchableOpacity>
                 </View>
+                <View style={Style.Content}>
+                  <View>
+                    <CustomText
+                      text={item.name}
+                      fontName={visueltProBlack}
+                      propsStyle={Style.Title}
+                    />
+                    <CustomText
+                      text={item.catchPlaceName}
+                      fontName={visueltProBlack}
+                      propsStyle={Style.CatchPlaceName}
+                    />
+                  </View>
+                  <View style={Style.Bottom}>
+                    <CustomText
+                      text={"Состав улова"}
+                      propsStyle={Style.Preorder}
+                    />
+                    <Marks />
+                    <CustomText
+                      text={"Собираем предзаказ еще:"}
+                      propsStyle={Style.Preorder}
+                    />
+                    <View style={Style.Timer}>
+                      <Timer finishDate={item.finishDate} />
+                    </View>
+                    <View style={Style.DeliveryWrapper}>
+                      <CustomText
+                        text={"Доставка:"}
+                        propsStyle={Style.DeliveryText}
+                      />
+                      <CustomText
+                        text={item.deliveryDate}
+                        fontName={visueltProBlack}
+                        propsStyle={Style.DeliveryText}
+                      />
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => goToFreshCatch()}
+                      style={[button, Style.Button]}
+                    >
+                      <CustomText
+                        text={"Посмотреть улов"}
+                        propsStyle={Style.ButtonText}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
-            </View>
-          </ImageBackground>
+            </ImageBackground>
           </View>
         ))}
       </View>
@@ -210,7 +224,7 @@ const Style = StyleSheet.create({
   Preorder: {
     marginBottom: 12,
     fontSize: 14,
-    color: 'white',
+    color: "white",
   },
   Timer: {
     marginBottom: 18,
