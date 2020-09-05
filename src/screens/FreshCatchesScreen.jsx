@@ -24,12 +24,19 @@ import Popup from "../components/popup/Popup";
 export const FreshCatchesScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
+  const [coordiantes, setCoordinates] = useState([]);
   const [freshCatches, setFreshCatches] = useState([
     {
       id: new Date().getTime(),
       location: {
         icon: flags.ru,
         name: "Гонконг",
+        coordiantes: [
+          {
+            latitude: 50.5128729,
+            longitude: 30.4755532,
+          },
+        ],
       },
       name: "Свежий улов голландских устриц",
       catchPlaceName: "Атлантический океан",
@@ -45,6 +52,12 @@ export const FreshCatchesScreen = () => {
       location: {
         icon: flags.ru,
         name: "Гонконг",
+        coordiantes: [
+          {
+            latitude: 50.5128729,
+            longitude: 30.4755532,
+          },
+        ],
       },
       name: "Свежий улов голландских устриц",
       catchPlaceName: "Атлантический океан",
@@ -61,9 +74,10 @@ export const FreshCatchesScreen = () => {
     navigation.navigate("FresCatches");
   };
 
-  const showMap = (title, description = "") => {
-    setModalVisible(true);
+  const showMap = (title, description = "", coordinate) => {
+    setCoordinates(coordinate);
     setModalContent({ title, description });
+    setModalVisible(true);
   };
 
   const closeModal = () => {
@@ -75,6 +89,7 @@ export const FreshCatchesScreen = () => {
       {modalVisible ? (
         <Popup handlerClose={closeModal} content={modalContent}>
           <Map
+            coordinates={coordiantes}
             propsStyle={{
               height: 400,
             }}
@@ -103,7 +118,13 @@ export const FreshCatchesScreen = () => {
                   </View>
                   <TouchableOpacity
                     style={Style.Map}
-                    onPress={() => showMap(item.name, item.catchPlaceName)}
+                    onPress={() =>
+                      showMap(
+                        item.name,
+                        item.catchPlaceName,
+                        item.location.coordiantes
+                      )
+                    }
                   >
                     <SvgUri source={map} />
                   </TouchableOpacity>
