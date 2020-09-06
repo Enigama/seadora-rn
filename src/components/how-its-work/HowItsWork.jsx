@@ -73,7 +73,6 @@ const HowItsWork = () => {
         <View style={Style.wrapper}>
           <View style={Style.icons}>
             <SvgUri source={fish} />
-            <SvgUri source={arrow} />
           </View>
           <CustomText
             text={"Получай и наслаждайся:"}

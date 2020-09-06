@@ -72,8 +72,8 @@ const App = () => {
           ),
         })}
       >
-        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
         <Stack.Screen
           name="Auth"
           options={{ headerShown: false }}
