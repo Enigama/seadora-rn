@@ -9,6 +9,7 @@ import { CustomText } from "../components/custom-text/CustomText";
 import { map } from "../../assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
 import { visueltProBlack } from "../constants/fontsC";
+import { Timer } from "../components/Timer/Timer";
 
 const FreshCatcheScreen = ({ route }) => {
   const { freshCatch } = route.params;
@@ -49,9 +50,19 @@ const FreshCatcheScreen = ({ route }) => {
               propsStyle={[Style.Description, Style.White]}
             />
             <CustomText
-              text={freshCatch.catchPlaceName}
+              text={freshCatch.catchTextSmall}
               propsStyle={[Style.Text, Style.White]}
             />
+          </View>
+
+          <View style={{}}>
+            <CustomText
+              text={"Собираем предзаказ еще:"}
+              propsStyle={[Style.White, Style.PreorderText]}
+            />
+            <View>
+              <Timer finishDate={freshCatch.finishDate} small={true} />
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -99,6 +110,10 @@ const Style = StyleSheet.create({
   },
   Text: {
     fontSize: 12,
+  },
+  PreorderText: {
+    marginBottom: 12,
+    fontSize: 14,
   },
 });
 
