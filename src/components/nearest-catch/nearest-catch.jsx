@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { CustomText } from "../custom-text/CustomText";
 import flags from "../../../assets/icons/flags.js";
-import hongKong from "./hongkong.svg";
 import SvgUri from "react-native-svg-uri";
 import bg from "./bg.jpg";
 import { map } from "../../../assets/icons/icons";
@@ -27,8 +26,8 @@ const NearestCatch = () => {
     {
       id: new Date().getTime(),
       location: {
-        icon: flags.ru,
-        name: "Гонконг",
+        icon: flags.kz,
+        name: "Казахстан",
         coordiantes: [
           {
             latitude: 50.5128729,
@@ -48,8 +47,8 @@ const NearestCatch = () => {
     {
       id: new Date().getTime(),
       location: {
-        icon: flags.ru,
-        name: "Гонконг",
+        icon: flags.ua,
+        name: "Украина",
         coordiantes: [
           {
             latitude: 50.5128729,
@@ -100,7 +99,11 @@ const NearestCatch = () => {
             <View style={Style.Body}>
               <View style={Style.Top}>
                 <View style={Style.Location}>
-                  <SvgUri source={hongKong} style={Style.Flag} width={24} />
+                  <SvgUri
+                    source={item.location.icon}
+                    style={Style.Flag}
+                    width={24}
+                  />
                   <CustomText
                     text={item.location.name}
                     propsStyle={Style.Desc}
