@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
-  Image,
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
@@ -17,57 +16,21 @@ import { button, colors } from "../../../baseStyle/baseStyle";
 import { useNavigation } from "@react-navigation/native";
 import Popup from "../popup/Popup";
 import Map from "../map/Map";
+import { getFreshCatches } from "../../../date/fresh-catches";
 
 const NearestCatch = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [coordiantes, setCoordinates] = useState([]);
-  const [freshCatches, setFreshCatches] = useState([
-    {
-      id: new Date().getTime(),
-      location: {
-        icon: flags.kz,
-        name: "Казахстан",
-        coordiantes: [
-          {
-            latitude: 50.5128729,
-            longitude: 30.4755532,
-          },
-        ],
-      },
-      name: "Свежий улов голландских устриц",
-      catchPlaceName: "Атлантический океан",
-      points: [""],
-      finishDate: null,
-      finishDate: "1600999453 ",
-      deliveryDate: "12 сентября",
-      freshCatchePicture: bg,
-    },
-
-    {
-      id: new Date().getTime(),
-      location: {
-        icon: flags.ua,
-        name: "Украина",
-        coordiantes: [
-          {
-            latitude: 50.5128729,
-            longitude: 30.4755532,
-          },
-        ],
-      },
-      name: "Свежий улов голландских устриц",
-      catchPlaceName: "Атлантический океан",
-      points: [""],
-      finishDate: null,
-      finishDate: "1600999453 ",
-      deliveryDate: "12 сентября",
-      freshCatchePicture: bg,
-    },
-  ]);
+  const [freshCatches, setFreshCatches] = useState([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    setFreshCatches([]);
+    setFreshCatches(getFreshCatches());
+  }, []);
+
   const goToFreshCatch = () => {
-    console.log(navigation);
     navigation.navigate("FresCatches");
   };
 

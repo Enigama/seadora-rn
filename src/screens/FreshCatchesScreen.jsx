@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -19,53 +19,19 @@ import { useNavigation } from "@react-navigation/native";
 import Tags from "../components/Tags/Tags";
 import Map from "../components/map/Map";
 import Popup from "../components/popup/Popup";
+import { getFreshCatches } from "../../date/fresh-catches";
 
 export const FreshCatchesScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [coordiantes, setCoordinates] = useState([]);
-  const [freshCatches, setFreshCatches] = useState([
-    {
-      id: new Date().getTime(),
-      location: {
-        icon: flags.ru,
-        name: "Россия",
-        coordiantes: [
-          {
-            latitude: 50.5128729,
-            longitude: 30.4755532,
-          },
-        ],
-      },
-      name: "Свежий улов голландских устриц",
-      catchPlaceName: "Атлантический океан",
-      finishDate: null,
-      finishDate: "1600999453 ",
-      deliveryDate: "12 сентября",
-      freshCatchePicture: bg,
-    },
-
-    {
-      id: new Date().getTime(),
-      location: {
-        icon: flags.ua,
-        name: "Украина",
-        coordiantes: [
-          {
-            latitude: 50.5128729,
-            longitude: 30.4755532,
-          },
-        ],
-      },
-      name: "Свежий улов голландских устриц 2",
-      catchPlaceName: "Атлантический океан",
-      finishDate: null,
-      finishDate: "1600999453 ",
-      deliveryDate: "12 сентября",
-      freshCatchePicture: bg,
-    },
-  ]);
+  const [freshCatches, setFreshCatches] = useState([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    setFreshCatches([]);
+    setFreshCatches(getFreshCatches());
+  }, []);
 
   const goToFreshCatch = (freshCatch) => {
     navigation.navigate("FresCatch", {

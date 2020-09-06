@@ -73,15 +73,15 @@ const App = () => {
           ),
         })}
       >
+        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="FresCatch" component={FreshCatcheScreen} />
         <Stack.Screen
           name="Auth"
           options={{ headerShown: false }}
           component={AuthScreen}
           initialParams={{ auth: IS_SIGN_IN }}
         />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
-        <Stack.Screen name="FresCatch" component={FreshCatcheScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
