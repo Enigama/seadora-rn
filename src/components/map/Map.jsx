@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polygon } from "react-native-maps";
 import { CustomText } from "../custom-text/CustomText";
 import {
   markerCar,
@@ -14,6 +14,24 @@ import { colors } from "../../../baseStyle/baseStyle";
 
 const Map = ({ propsStyle, coordinates }) => {
   console.log(coordinates, "coor");
+  const getMarker = (markerName) => {
+    switch (markerName) {
+      case "markerCar":
+        return markerCar;
+
+      case "markerPlane":
+        return markerPlane;
+
+      case "markerRestaurant":
+        return markerRestaurant;
+
+      case "markerSeadora":
+        return markerSeadora;
+
+      default:
+        return markerCatch;
+    }
+  };
   return (
     <View style={Style.MapView}>
       <MapView
@@ -31,7 +49,7 @@ const Map = ({ propsStyle, coordinates }) => {
                 <Marker coordinate={coordinate} key={index}>
                   <View style={Style.MarkerBody}>
                     <SvgUri
-                      source={coordinate.icon ? coordinate.icon : markerCatch}
+                      source={getMarker(coordinate.icon)}
                       style={Style.MarkerIcon}
                     />
                     <View style={Style.Dot} />
@@ -40,6 +58,13 @@ const Map = ({ propsStyle, coordinates }) => {
               );
             })
           : null}
+        {coordinates.length > 1 ? (
+          <Polygon
+            coordinates={coordinates}
+            strokeWidth={4}
+            strokeColor={"#00B0FF"}
+          />
+        ) : null}
       </MapView>
     </View>
   );
