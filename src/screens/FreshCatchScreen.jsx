@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,16 +6,28 @@ import {
   ImageBackground,
 } from "react-native";
 import { CustomText } from "../components/custom-text/CustomText";
-import { map } from "../../assets/icons/icons";
+import { map, info } from "../../assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
 import { visueltProBlack } from "../constants/fontsC";
 import { Timer } from "../components/Timer/Timer";
+import { Tooltip } from "react-native-elements";
 
 const FreshCatcheScreen = ({ route }) => {
+  const [tooltipHeight, setTooltipHeight] = useState(40);
   const { freshCatch } = route.params;
 
   const showMap = () => {};
-  console.log(map, "map");
+
+  const getTooltipContent = (content) => {
+    return (
+      <View
+        onLayout={(e) => setTooltipHeight(e.nativeEvent.layout.height)}
+        style={Style.TooltipView}
+      >
+        <CustomText text={content} />
+      </View>
+    );
+  };
 
   return (
     <View>
@@ -38,7 +50,7 @@ const FreshCatcheScreen = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-          <View>
+          <View style={Style.Content}>
             <CustomText
               text={freshCatch.name}
               fontName={visueltProBlack}
@@ -55,13 +67,26 @@ const FreshCatcheScreen = ({ route }) => {
             />
           </View>
 
-          <View style={{}}>
+          <View>
             <CustomText
               text={"Собираем предзаказ еще:"}
               propsStyle={[Style.White, Style.PreorderText]}
             />
-            <View>
+            <View style={Style.PreorderRow}>
               <Timer finishDate={freshCatch.finishDate} small={true} />
+              <View style={Style.TooltipHolder}>
+                <Tooltip
+                  width={200}
+                  height={tooltipHeight}
+                  containerStyle={Style.Tooltip}
+                  backgroundColor={Style.TooltipBackground.backgroundColor}
+                  overlayColor={Style.TooltipOverlay.backgroundColor}
+                  popover={getTooltipContent(freshCatch.tooltipDescription)}
+                  closeOnlyOnBackdropPress={true}
+                >
+                  <SvgUri source={info} width={16} />
+                </Tooltip>
+              </View>
             </View>
           </View>
         </View>
@@ -111,9 +136,35 @@ const Style = StyleSheet.create({
   Text: {
     fontSize: 12,
   },
+  Content: {
+    marginBottom: 58,
+  },
   PreorderText: {
     marginBottom: 12,
     fontSize: 14,
+  },
+  PreorderRow: {
+    flexDirection: "row",
+  },
+  TooltipHolder: {
+    alignSelf: "flex-start",
+  },
+  Tooltip: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
+  TooltipBackground: {
+    backgroundColor: "#fff",
+  },
+  TooltipOverlay: {
+    backgroundColor: "transparent",
+  },
+  TooltipView: {
+    paddingVertical: 5,
+    paddingHorizontal: 5,
   },
 });
 

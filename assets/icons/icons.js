@@ -7,5 +7,17 @@ import google from "./social/google.svg";
 import facebook from "./social/fb.svg";
 import moneyPack from "./moneyPack.svg";
 import map from "./map.svg";
+import info from "./info.svg";
 
-export { menu, search, basket, user, logo, google, facebook, moneyPack, map };
+export {
+  menu,
+  search,
+  basket,
+  user,
+  logo,
+  google,
+  facebook,
+  moneyPack,
+  map,
+  info,
+};
