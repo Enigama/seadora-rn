@@ -15,6 +15,7 @@ import { IS_SIGN_IN } from "./src/constants/authC";
 import { colors } from "./baseStyle/baseStyle";
 import { menu, search, basket, user, logo } from "./assets/icons/icons";
 import SvgUri from "react-native-svg-uri";
+import FreshCatcheScreen from "./src/screens/FreshCatchScreen";
 
 const Stack = createStackNavigator();
 
@@ -72,14 +73,15 @@ const App = () => {
           ),
         })}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
         <Stack.Screen
           name="Auth"
           options={{ headerShown: false }}
           component={AuthScreen}
           initialParams={{ auth: IS_SIGN_IN }}
         />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="FresCatches" component={FreshCatchesScreen} />
+        <Stack.Screen name="FresCatch" component={FreshCatcheScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

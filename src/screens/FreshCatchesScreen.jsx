@@ -9,7 +9,6 @@ import {
 import { CustomText } from "../components/custom-text/CustomText";
 import Marks from "../components/marks/Marks";
 import flags from "../../assets/icons/flags";
-import hongKong from "./hongkong.svg";
 import SvgUri from "react-native-svg-uri";
 import bg from "./bg.jpg";
 import { map } from "../../assets/icons/icons";
@@ -30,7 +29,7 @@ export const FreshCatchesScreen = () => {
       id: new Date().getTime(),
       location: {
         icon: flags.ru,
-        name: "Гонконг",
+        name: "Россия",
         coordiantes: [
           {
             latitude: 50.5128729,
@@ -40,7 +39,6 @@ export const FreshCatchesScreen = () => {
       },
       name: "Свежий улов голландских устриц",
       catchPlaceName: "Атлантический океан",
-      points: [""],
       finishDate: null,
       finishDate: "1600999453 ",
       deliveryDate: "12 сентября",
@@ -50,8 +48,8 @@ export const FreshCatchesScreen = () => {
     {
       id: new Date().getTime(),
       location: {
-        icon: flags.ru,
-        name: "Гонконг",
+        icon: flags.ua,
+        name: "Украина",
         coordiantes: [
           {
             latitude: 50.5128729,
@@ -59,9 +57,8 @@ export const FreshCatchesScreen = () => {
           },
         ],
       },
-      name: "Свежий улов голландских устриц",
+      name: "Свежий улов голландских устриц 2",
       catchPlaceName: "Атлантический океан",
-      points: [""],
       finishDate: null,
       finishDate: "1600999453 ",
       deliveryDate: "12 сентября",
@@ -70,8 +67,10 @@ export const FreshCatchesScreen = () => {
   ]);
   const navigation = useNavigation();
 
-  const goToFreshCatch = () => {
-    navigation.navigate("FresCatches");
+  const goToFreshCatch = (freshCatch) => {
+    navigation.navigate("FresCatch", {
+      freshCatch,
+    });
   };
 
   const showMap = (title, description = "", coordinate) => {
@@ -110,7 +109,11 @@ export const FreshCatchesScreen = () => {
               <View style={Style.Body}>
                 <View style={Style.Top}>
                   <View style={Style.Location}>
-                    <SvgUri source={hongKong} style={Style.Flag} width={24} />
+                    <SvgUri
+                      source={item.location.icon}
+                      style={Style.Flag}
+                      width={24}
+                    />
                     <CustomText
                       text={item.location.name}
                       propsStyle={Style.Desc}
@@ -167,7 +170,7 @@ export const FreshCatchesScreen = () => {
                       />
                     </View>
                     <TouchableOpacity
-                      onPress={() => goToFreshCatch()}
+                      onPress={() => goToFreshCatch(item)}
                       style={[button, Style.Button]}
                     >
                       <CustomText
