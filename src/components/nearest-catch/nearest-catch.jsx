@@ -31,7 +31,7 @@ const NearestCatch = () => {
   }, []);
 
   const goToFreshCatch = () => {
-    navigation.navigate("FresCatches");
+    navigation.navigate("FreshCatches");
   };
 
   const showMap = (title, description = "", coordinate) => {

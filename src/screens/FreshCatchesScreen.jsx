@@ -34,7 +34,7 @@ export const FreshCatchesScreen = () => {
   }, []);
 
   const goToFreshCatch = (freshCatch) => {
-    navigation.navigate("FresCatch", {
+    navigation.navigate("FreshCatch", {
       freshCatch,
     });
   };

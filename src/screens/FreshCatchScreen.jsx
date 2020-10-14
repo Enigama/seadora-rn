@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   TouchableOpacity,
   ImageBackground,
+  ScrollView,
 } from "react-native";
 import { CustomText } from "../components/custom-text/CustomText";
 import { map, info } from "../../assets/icons/icons";
@@ -11,12 +12,22 @@ import SvgUri from "react-native-svg-uri";
 import { visueltProBlack } from "../constants/fontsC";
 import { Timer } from "../components/Timer/Timer";
 import { Tooltip } from "react-native-elements";
+import AppTileList from "../components/app-tile-list/AppTileList";
+import {getItems} from "../../date/tile";
 
-const FreshCatcheScreen = ({ route }) => {
+export const FreshCatchScreen = ({ route }) => {
   const [tooltipHeight, setTooltipHeight] = useState(40);
+  const [products, setProducts] = useState([]);
   const { freshCatch } = route.params;
 
   const showMap = () => {};
+
+  useEffect(() => {
+    getItems().then(r => {
+      console.log(r, 'testing use effect');
+      setProducts(r);
+    });
+  }, []);
 
   const getTooltipContent = (content) => {
     return (
@@ -30,7 +41,7 @@ const FreshCatcheScreen = ({ route }) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <ImageBackground style={Style.Background} source={require("./fcbg.jpg")}>
         <View style={Style.Info}>
           <View style={Style.Location}>
@@ -91,10 +102,9 @@ const FreshCatcheScreen = ({ route }) => {
           </View>
         </View>
       </ImageBackground>
-      <View></View>
-      <View></View>
       <CustomText text={freshCatch.name} />
-    </View>
+      { products.length ? <AppTileList products={products}/> : null }
+    </ScrollView>
   );
 };
 
@@ -167,5 +177,3 @@ const Style = StyleSheet.create({
     paddingHorizontal: 5,
   },
 });
-
-export default FreshCatcheScreen;
