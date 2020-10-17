@@ -6,7 +6,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { CustomText } from "../custom-text/CustomText";
-import flags from "../../../assets/icons/flags.js";
 import SvgUri from "react-native-svg-uri";
 import bg from "./bg.jpg";
 import { map } from "../../../assets/icons/icons";
@@ -16,19 +15,14 @@ import { button, colors } from "../../../baseStyle/baseStyle";
 import { useNavigation } from "@react-navigation/native";
 import Popup from "../popup/Popup";
 import Map from "../map/Map";
-import { getFreshCatches } from "../../../date/fresh-catches";
+import useFreshCatches from "../../hooks/useFreshCatches";
 
 const NearestCatch = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContent, setModalContent] = useState({});
   const [coordiantes, setCoordinates] = useState([]);
-  const [freshCatches, setFreshCatches] = useState([]);
+  const [{ isLoading, response }, doFetch] = useFreshCatches([]);
   const navigation = useNavigation();
-
-  useEffect(() => {
-    setFreshCatches([]);
-    setFreshCatches(getFreshCatches());
-  }, []);
 
   const goToFreshCatch = () => {
     navigation.navigate("FreshCatches");
@@ -44,6 +38,10 @@ const NearestCatch = () => {
     setModalVisible(false);
   };
 
+  useEffect(() => {
+    doFetch();
+  }, []);
+
   return (
     <View>
       {modalVisible ? (
@@ -56,82 +54,87 @@ const NearestCatch = () => {
           />
         </Popup>
       ) : null}
-      {freshCatches.map((item, i) => (
-        <View style={[i % 2 === 1 ? { marginTop: 24 } : null]} key={item.id}>
-          <ImageBackground style={Style.Background} source={bg}>
-            <View style={Style.Body}>
-              <View style={Style.Top}>
-                <View style={Style.Location}>
-                  <SvgUri
-                    source={item.location.icon}
-                    style={Style.Flag}
-                    width={24}
-                  />
-                  <CustomText
-                    text={item.location.name}
-                    propsStyle={Style.Desc}
-                  />
-                </View>
-                <TouchableOpacity
-                  style={Style.Map}
-                  onPress={() =>
-                    showMap(
-                      item.name,
-                      item.catchPlaceName,
-                      item.location.coordiantes
-                    )
-                  }
-                >
-                  <SvgUri source={map} />
-                </TouchableOpacity>
-              </View>
-              <View style={Style.Content}>
-                <View>
-                  <CustomText
-                    text={item.name}
-                    fontName={visueltProBlack}
-                    propsStyle={Style.Title}
-                  />
-                  <CustomText
-                    text={item.catchPlaceName}
-                    fontName={visueltProBlack}
-                    propsStyle={Style.CatchPlaceName}
-                  />
-                </View>
-                <View style={Style.Bottom}>
-                  <CustomText
-                    text={"Собираем предзаказ еще:"}
-                    propsStyle={Style.Preorder}
-                  />
-                  <View style={Style.Timer}>
-                    <Timer finishDate={item.finishDate} />
+      {response
+        ? response.map((item, i) => (
+            <View
+              style={[i % 2 === 1 ? { marginTop: 24 } : null]}
+              key={item.id}
+            >
+              <ImageBackground style={Style.Background} source={bg}>
+                <View style={Style.Body}>
+                  <View style={Style.Top}>
+                    <View style={Style.Location}>
+                      <SvgUri
+                        source={item.location.icon}
+                        style={Style.Flag}
+                        width={24}
+                      />
+                      <CustomText
+                        text={item.location.name}
+                        propsStyle={Style.Desc}
+                      />
+                    </View>
+                    <TouchableOpacity
+                      style={Style.Map}
+                      onPress={() =>
+                        showMap(
+                          item.name,
+                          item.catchPlaceName,
+                          item.location.coordiantes
+                        )
+                      }
+                    >
+                      <SvgUri source={map} />
+                    </TouchableOpacity>
                   </View>
-                  <View style={Style.DeliveryWrapper}>
-                    <CustomText
-                      text={"Доставка:"}
-                      propsStyle={Style.DeliveryText}
-                    />
-                    <CustomText
-                      text={item.deliveryDate}
-                      fontName={visueltProBlack}
-                      propsStyle={Style.DeliveryText}
-                    />
+                  <View style={Style.Content}>
+                    <View>
+                      <CustomText
+                        text={item.name}
+                        fontName={visueltProBlack}
+                        propsStyle={Style.Title}
+                      />
+                      <CustomText
+                        text={item.catchPlaceName}
+                        fontName={visueltProBlack}
+                        propsStyle={Style.CatchPlaceName}
+                      />
+                    </View>
+                    <View style={Style.Bottom}>
+                      <CustomText
+                        text={"Собираем предзаказ еще:"}
+                        propsStyle={Style.Preorder}
+                      />
+                      <View style={Style.Timer}>
+                        <Timer finishDate={item.finishDate} />
+                      </View>
+                      <View style={Style.DeliveryWrapper}>
+                        <CustomText
+                          text={"Доставка:"}
+                          propsStyle={Style.DeliveryText}
+                        />
+                        <CustomText
+                          text={item.deliveryDate}
+                          fontName={visueltProBlack}
+                          propsStyle={Style.DeliveryText}
+                        />
+                      </View>
+                      <TouchableOpacity
+                        onPress={() => goToFreshCatch()}
+                        style={[button, Style.Button]}
+                      >
+                        <CustomText
+                          text={"Перейти ко фрешкетчу"}
+                          propsStyle={Style.ButtonText}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => goToFreshCatch()}
-                    style={[button, Style.Button]}
-                  >
-                    <CustomText
-                      text={"Перейти ко фрешкетчу"}
-                      propsStyle={Style.ButtonText}
-                    />
-                  </TouchableOpacity>
                 </View>
-              </View>
+              </ImageBackground>
             </View>
-          </ImageBackground>
-        </View>
-      ))}
+          ))
+        : null}
     </View>
   );
 };
