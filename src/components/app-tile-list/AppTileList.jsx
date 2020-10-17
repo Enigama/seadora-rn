@@ -5,8 +5,8 @@ import {CustomText} from "../custom-text/CustomText";
 
 const AppTileList = ({products}) => {
 	return (
-		<View>
-			{products.map(item => (<AppTile item={item}/>))}
+		<View style={Style.Wrapper}>
+			{products.map((item, index) => (<AppTile item={item} style={index !== 0 && Style.offsetTop}/>))}
 		</View>
 		// <FlatList data={products}
 		// 					renderItem={AppTile}
@@ -21,7 +21,10 @@ const Style = {
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingHorizontal: 12,
-	}
+	},
+	offsetTop: {
+		marginTop: 16,
+	},
 }
 
 export default AppTileList;

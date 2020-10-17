@@ -102,7 +102,6 @@ export const FreshCatchScreen = ({ route }) => {
           </View>
         </View>
       </ImageBackground>
-      <CustomText text={freshCatch.name} />
       { products.length ? <AppTileList products={products}/> : null }
     </ScrollView>
   );
@@ -112,6 +111,7 @@ const Style = StyleSheet.create({
   Background: {
     width: "100%",
     resizeMode: "cover",
+    marginBottom: 24,
   },
   Info: {
     paddingVertical: 24,
